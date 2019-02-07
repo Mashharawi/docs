@@ -16,10 +16,9 @@ WARNING:
 
 # Supported tags and respective `Dockerfile` links
 
--	[`1.32.0`, `1.32` (*1.32/Dockerfile*)](https://github.com/wikimedia/mediawiki-docker/blob/06e8e1fff294a244b3c6177dd9138f14e4b410fa/1.32/Dockerfile)
--	[`1.31.1`, `1.31`, `lts`, `stable`, `latest` (*1.31/Dockerfile*)](https://github.com/wikimedia/mediawiki-docker/blob/06e8e1fff294a244b3c6177dd9138f14e4b410fa/1.31/Dockerfile)
--	[`1.30.1`, `1.30`, `legacy` (*1.30/Dockerfile*)](https://github.com/wikimedia/mediawiki-docker/blob/06e8e1fff294a244b3c6177dd9138f14e4b410fa/1.30/Dockerfile)
--	[`1.27.5`, `1.27`, `legacylts` (*1.27/Dockerfile*)](https://github.com/wikimedia/mediawiki-docker/blob/06e8e1fff294a244b3c6177dd9138f14e4b410fa/1.27/Dockerfile)
+**No supported tags found!**
+
+It is very likely that `mediawiki` does not support the currently selected architecture (`s390x`).
 
 # Quick reference
 
@@ -62,13 +61,13 @@ MediaWiki is free and open-source wiki software. Originally developed by Magnus 
 The basic pattern for starting a `mediawiki` instance is:
 
 ```console
-$ docker run --name some-mediawiki -d mediawiki
+$ docker run --name some-mediawiki -d s390x/mediawiki
 ```
 
 If you'd like to be able to access the instance from the host without the container's IP, standard port mappings can be used:
 
 ```console
-$ docker run --name some-mediawiki -p 8080:80 -d mediawiki
+$ docker run --name some-mediawiki -p 8080:80 -d s390x/mediawiki
 ```
 
 Then, access it via `http://localhost:8080` or `http://host-ip:8080` in a browser.
@@ -80,7 +79,7 @@ When first accessing the webserver provided by this image, it will go through a 
 ## MySQL
 
 ```console
-$ docker run --name some-mediawiki --link some-mysql:mysql -d mediawiki
+$ docker run --name some-mediawiki --link some-mysql:mysql -d s390x/mediawiki
 ```
 
 -	Database type: `MySQL, MariaDB, or equivalent`
@@ -94,7 +93,7 @@ By default, this image does not include any volumes.
 The paths `/var/www/html/images` and `/var/www/html/LocalSettings.php` are things that generally ought to be volumes, but do not explicitly have a `VOLUME` declaration in this image because volumes cannot be removed.
 
 ```console
-$ docker run --rm mediawiki tar -cC /var/www/html/sites . | tar -xC /path/on/host/sites
+$ docker run --rm s390x/mediawiki tar -cC /var/www/html/sites . | tar -xC /path/on/host/sites
 ```
 
 ## ... via [`docker stack deploy`](https://docs.docker.com/engine/reference/commandline/stack_deploy/) or [`docker-compose`](https://github.com/docker/compose)
@@ -129,10 +128,10 @@ services:
       MYSQL_DATABASE: my_wiki
       MYSQL_USER: wikiuser
       MYSQL_PASSWORD: example
-      MYSQL_RANDOM_ROOT_PASSWORD: yes
+      MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
 ```
 
-[![Try in PWD](https://github.com/play-with-docker/stacks/raw/cff22438cb4195ace27f9b15784bbb497047afa7/assets/images/button.png)](http://play-with-docker.com?stack=https://raw.githubusercontent.com/docker-library/docs/9efeec18b6b2ed232cf0fbd3914b6211e16e242c/mediawiki/stack.yml)
+[![Try in PWD](https://github.com/play-with-docker/stacks/raw/cff22438cb4195ace27f9b15784bbb497047afa7/assets/images/button.png)](http://play-with-docker.com?stack=https://raw.githubusercontent.com/docker-library/docs/7b72bad5e2c684fa5829aecd3bf5b17a6e685963/mediawiki/stack.yml)
 
 Run `docker stack deploy -c stack.yml mediawiki` (or `docker-compose -f stack.yml up`), wait for it to initialize completely, and visit `http://swarm-ip:8080`, `http://localhost:8080`, or `http://host-ip:8080` (as appropriate).
 
